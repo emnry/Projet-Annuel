@@ -1,2 +1,2 @@
 # Projet-Annuel
-https://emnry.github.io/GreenIt.github.io/
+https://emnry.github.io/Projet-Annuel.github.io/
