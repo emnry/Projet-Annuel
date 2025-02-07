@@ -6,8 +6,8 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Connection - MyGES</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='styles.css'> 
-    <script src='script.js'></script> 
+    <link rel="stylesheet" type="text/css" href="../css/styles.css" />
+    <script type="text/javascript" src="../js/script.js"></script>
 
     <link rel="icon" type="image/vnd.icon" href="../img/favicon.ico">
 
@@ -15,16 +15,23 @@
 
 <body>
     <header>
+        <div class="box">
 
         <h1>Bienvenue sur My GEStion</h1>
         <h2>Connectez-vous avec votre compte MYGES.</h2>
+        <div class ="identifant">
+            <label for="mail">Mail :</label>
 
-        <div class="box">
-            
             <input id="mail" type="text" placeholder="Email">
-            <input id="password" type="text" placeholder="Mot de passe">
 
-            <button id="connecter" type="text" button>
+
+            <label for="password">Mot de passe :</label>
+            <input id="password" type="text" placeholder="Mot de passe">
+        </div>
+        
+            
+        
+            <button id="connecter"  type="text" >Se connecter</button>
 
         </div>
     </header>
