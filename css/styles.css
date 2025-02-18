@@ -94,3 +94,14 @@ h1 {
 .trimestres ~ .trimestres{
     margin-left: var(--gap);
 }
+
+
+.button_retour {
+    background-color: #ff4444;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    display: block;
+    margin-bottom: 10px;
+}
