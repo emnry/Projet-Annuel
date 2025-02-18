@@ -43,6 +43,9 @@ body {
 .long {
     width: calc(100% - var(--gap));
     height: calc(28.125vh - var(--gap));
+
+    display: flex;   
+
 }
 
 .row {
@@ -55,6 +58,8 @@ body {
 .small {
     width: calc(50% - var(--gap));
     height: calc(28.125vh - var(--gap));
+
+    text-align: center;
 }
 
 .big {
@@ -68,12 +73,12 @@ body {
     padding: 0 2em;
 }
 
-img {
+#logo_icon {
     margin-left: auto;
     height: 5em;
 }
 
-h1 {
+.row.no-center h1 {
     font-size: 1.75em;
     font-weight: 10;
 }
@@ -93,4 +98,66 @@ h1 {
 
 .trimestres ~ .trimestres{
     margin-left: var(--gap);
+}
+
+.small h1{
+    font-size: 2.5em;
+    margin-top: 1.5em;
+    margin-bottom: 0;
+}
+
+.small h2{
+    font-size: 5em;
+    color: white;
+    margin: 0;
+    margin-top: 0.125em;
+}
+
+.small h3{
+    margin: 0.5em;
+    margin-top:0;
+    font-size: 1em;
+}
+
+#amelioration_icon, #share_icon{
+    margin-top: 1.25em;
+}
+
+#amelioration_icon{
+    height: 1.75em;
+}
+
+#share_icon{
+    height: 2em;
+}
+
+.small img ~ img{
+    margin-left: 50%;
+}
+
+#account_icon{
+    height: 5em;
+    margin-bottom: 0;
+    margin-top: 2em;
+}
+
+.long h1{
+    margin: 0;
+}
+
+#see_more_icon{
+    height: 2em;
+    margin: 0;
+}
+
+h1 ~ #see_more_icon{
+    margin-left: 20%;
+}
+
+.long .row{
+    align-content: center;
+    vertical-align: middle;
+    height: 10%;
+    margin: 0;
+    margin-top: 3em;
 }
