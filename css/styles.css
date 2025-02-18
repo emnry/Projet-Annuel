@@ -1,5 +1,5 @@
 :root {
-    --gap: 2.5vw;
+    --gap: 2.5vh;
     --border-radius : 2em;
 }
 
@@ -17,10 +17,10 @@ body {
 }
 
 .page {
+
     
     height: 100vh;
     width: 56.25vh;
-    border: 1px solid white;
     display: flex;
     flex-wrap: wrap;
     gap: var(--gap);
