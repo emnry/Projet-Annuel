@@ -12,36 +12,34 @@
     <link rel="icon" type="image/png" href="../img/favicon.png">
 
     <style>
-        body{
+        body {
             background-color: #1E1E1E;
         }
-
-        
     </style>
 
 </head>
 
 <body>
 
-    
+
 
     <div class="page">
 
         <div class="logo">
             <h1>Bonjour &lt;username&gt; !</h1>
 
-            <img src="../img/logo.svg" alt="MyGES Stats">
+            <img id="logo_icon" src="../img/logo.svg" alt="MyGES Stats">
         </div>
 
         <div class="row">
 
             <div class="parameters">
-                <div class = "trimestres" id= "trimestre1" onclick="changement_trimestre(1)">
-                    Trimestre 1 
+                <div class="trimestres" id="trimestre1" onclick="changement_trimestre(1)">
+                    Trimestre 1
                 </div>
-                <div class = "trimestres" id= "trimestre2" onclick="changement_trimestre(2)">
+                <div class="trimestres" id="trimestre2" onclick="changement_trimestre(2)">
                     Trimestre 2
-                    
+
                 </div>
             </div>
 
@@ -50,19 +48,41 @@
 
         <div class="row">
             <div class="small">
+                <h1>Ma moyenne</h1>
+                <h2>&lt;Moy&gt;</h2>
+                <h3>trimestre &lt;n&gt;</h3>
+
+                <img id="amelioration_icon" src="../img/amelioration.svg" alt="amelioration">
+                <img id="share_icon" src="../img/share.svg" alt="partager">
             </div>
 
             <div class="small">
+                <h1>Mon compte MyGES</h1>
+                <img id="account_icon" src="../img/account.svg" alt="mon_compte">
+                <h3>&lt;classe&gt;</h3>
+
             </div>
         </div>
 
         <div class="row">
             <div class="long">
+
+                <div class="row">
+                    <h1>Mes dernières notes</h1>
+                    <img id="see_more_icon" src="../img/see_more.svg" alt="voir_plus">
+                </div>
+                <div class="note"></div>
+                <div class="note"></div>
+                <div class="note"></div>
+
+
             </div>
         </div>
 
         <div class="row">
             <div class="big">
+
+                <h1>Matières</h1>
             </div>
         </div>
         
