@@ -40,3 +40,16 @@ footer {
     padding: 15px 0;
     background-color: #ffffff;
 }
+
+
+.cementix{
+    position: absolute;
+    display: flex;
+    margin: auto;
+    top: 50px;
+    left: 50px;
+    width: auto;
+    
+
+
+}
