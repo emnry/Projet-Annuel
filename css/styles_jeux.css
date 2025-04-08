@@ -53,10 +53,21 @@ footer {
 
 
 .jeux{
-    background-color: #4f6d7a;
     display: flex;
     margin-top: 20px;
     padding: 15px;
     border-radius: 25px;
 
+}
+
+.bouton{
+    background-color: #ffffff;
+    color: #4f6d7a;
+    padding: 15px;
+    border-radius: 10px;
+
+}
+
+.bouton:hover {
+    transform: translateY(-5px);
 }
