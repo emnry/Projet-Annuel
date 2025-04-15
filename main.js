@@ -434,7 +434,7 @@ function displayDescription() {
     label.style.opacity = "0";
 
     setTimeout(() => {
-        label.textContent = descriptionText.classList.contains("hidden") ? "Révéler les règles" : "Cacher les règles";
+        label.textContent = descriptionText.classList.contains("hidden") ? "Afficher\u00A0les\u00A0règles" : "Cacher les règles";
         label.style.opacity = "1";
     }, 300);
 

@@ -19,12 +19,14 @@
 <body>
 
 
-    <header class="header">
-        <h1>Quelle est cette&nbsp;page&nbsp;?</h1>
-        <div id="page-title"></div>
+    <header class="header box">
+        <div class="headerContent">
+            <h1>Quelle est cette&nbsp;page&nbsp;?</h1>
+            <div id="page-title"></div>
+        </div>
     </header>
 
-    <div class="description">
+    <div class="description box">
         <div class="buttonContainer">
             <button id="displayButton" onclick="displayDescription()"></button>
             <label id="displayLabel" for="displayButton">Cacher les règles</label>
@@ -40,13 +42,13 @@
 
     <div class="history">
         <span> Essais&nbsp;:&nbsp;<span id="triesCounter">0</span></span>
-        <div id="historyContainer"></div>
+        <div id="historyContainer" class="box"></div>
     </div>
-    
+
     <div>
         <form id="game-form">
-            <input id="form-input" type="text" placeholder="Proposition">
-            <input id="form-submit" type="submit" value="Envoyer">
+            <input class="box" id="form-input" type="text" placeholder="Proposition">
+            <input class="box" id="form-submit" type="submit" value="Envoyer">
         </form>
     </div>
 
@@ -56,7 +58,7 @@
     </div>
 
     <div class="generate">
-        <select id="themeSelect">
+        <select class="box" id="themeSelect">
             <option id="random" value="random">🎲 Aléatoire (Difficile)</option>
             <option id="nature" value="nature">🌿 Nature</option>
             <option id="technology" value="technology">💻 Technologie</option>
@@ -78,11 +80,11 @@
             <option id="innovation" value="innovation">🚀 Innovation</option>
         </select>
 
-        <input type="button" onclick="link()" value="Générer une page">
+        <input class="box" id="generateButton" type="button" onclick="link()" value="Générer une page">
     </div>
 
-    <footer>
-        <p>© 2025 <a href="https://github.com/emnry">Ethan MENOURY</a>. Tous droits réservés.</p>
+    <footer class="box">
+        <p>© 2025 <p>© 2025 <a href="https://github.com/emnry">Ethan MENOURY</a>, <a href="https://github.com/Edouardvlt">Edouard Vallet</a> & <a href="https://github.com/Rablagouzdale">Gaël Petit</a>. Tous droits réservés.</p> Tous droits réservés.</p>
     </footer>
 
 
