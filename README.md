@@ -1,2 +1,2 @@
-# Projet-Annuel.github.io
+# Projet-Annuel
 https://emnry.github.io/Projet-Annuel
