@@ -61,7 +61,7 @@ async function getAssociatedWord() {
 
     // Récupère le thème choisi 
     const theme = document.getElementById('themeSelect').value;
-    const url = `https://api.datamuse.com/words?rel_trg=${theme}&max=1000`;
+    const url = `https://api.datamuse.com/words?rel_trg=${theme}&topics=${theme}`;
 
     try {
         // Requête API Datamuse
@@ -80,16 +80,21 @@ async function getAssociatedWord() {
         }
 
         // Tenter plusieurs mots jusqu'à trouver une page wiki valide
-        for (let i = 0; i < 30; i++) {
+        let found = false;
+
+        while (found == false){
 
             // Sélectionne un mot aléatoire parmi les résultats
             const randomWord = data[Math.floor(Math.random() * data.length)].word;
+
+            console.log(randomWord);
             const translated = await translateWord(randomWord);
 
             if (!translated) continue; // Si la traduction échoue, on passe au suivant
 
             const pageId = await checkWikipediaPage(translated);
             if (pageId) {
+                found = true;
                 return { translated, pageId };
             }
         }
