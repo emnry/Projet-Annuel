@@ -61,7 +61,7 @@ async function getAssociatedWord() {
 
     // Récupère le thème choisi 
     const theme = document.getElementById('themeSelect').value;
-    const url = `https://api.datamuse.com/words?rel_trg=${theme}&topics=${theme}&max=1000`;
+    const url = `https://api.datamuse.com/words?rel_trg=${theme}&topics=${theme}`;
 
     try {
         // Requête API Datamuse
@@ -434,7 +434,7 @@ function displayDescription() {
     label.style.opacity = "0";
 
     setTimeout(() => {
-        label.textContent = descriptionText.classList.contains("hidden") ? "Afficher\u00A0les\u00A0règles" : "Cacher les règles";
+        label.textContent = descriptionText.classList.contains("hidden") ? "Révéler les règles" : "Cacher les règles";
         label.style.opacity = "1";
     }, 300);
 
