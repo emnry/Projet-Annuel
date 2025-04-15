@@ -2,10 +2,6 @@
 <html>
 
 <head>
-<<<<<<< HEAD
-    <meta http-equiv="refresh" content="0; url=html/jeux.html">
-    <title>Redirection</title>
-=======
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Jouer</title>
@@ -18,27 +14,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap"
         rel="stylesheet">
 
->>>>>>> fc59384585bae126f779cef9fb190b783092aa3c
 </head>
 
 <body>
-<<<<<<< HEAD
-    Si vous n'êtes pas redirigé automatiquement, <a href="html/jeux.html">cliquez ici</a>.
-=======
 
 
-    <header>
-        Quelle est cette page ? <span id="page-title"></span>
+    <header class="header">
+        <h1>Quelle est cette&nbsp;page&nbsp;?</h1>
+        <div id="page-title"></div>
     </header>
 
-    <p class="description">
-        Devine un article de Wikipédia en découvrant les mots de son résumé introductif !<br>
-        À chaque tour, propose un mot que tu penses être caché dans le texte. Si tu es correct, le mot est
-        dévoilé.<br>
-        Tu peux générer un nouvel article à l'infini, soit de façon aléatoire, soit en choisissant un thème.<br>
-        Ton objectif est de deviner tous les mots avant d'épuiser tes essais.
-    </p>
+    <div class="description">
+        <div class="buttonContainer">
+            <button id="displayButton" onclick="displayDescription()"></button>
+            <label id="displayLabel" for="displayButton">Cacher les règles</label>
+        </div>
+        <p id="descriptionText">
+            Devine un article de Wikipédia en découvrant les mots de son résumé introductif !<br>
+            À chaque tour, propose un mot que tu penses être caché dans le texte. Si tu es correct, le mot est
+            dévoilé.<br>
+            Tu peux générer un nouvel article à l'infini, soit de façon aléatoire, soit en choisissant un thème.<br>
+            Ton objectif est de deviner tous les mots avant d'épuiser tes essais.
+        </p>
+    </div>
 
+    <div class="history">
+        <span> Essais&nbsp;:&nbsp;<span id="triesCounter">0</span></span>
+        <div id="historyContainer"></div>
+    </div>
+    
     <div>
         <form id="game-form">
             <input id="form-input" type="text" placeholder="Proposition">
@@ -53,25 +57,25 @@
 
     <div class="generate">
         <select id="themeSelect">
-            <option value="random">Aléatoire (Difficile)</option>
-            <option value="nature">Nature</option>
-            <option value="technology">Technologie</option>
-            <option value="history">Histoire</option>
-            <option value="emotions">Émotions</option>
-            <option value="travel">Voyage</option>
-            <option value="art">Art</option>
-            <option value="adventure">Aventure</option>
-            <option value="colors">Couleurs</option>
-            <option value="music">Musique</option>
-            <option value="legends">Légendes</option>
-            <option value="seasons">Saisons</option>
-            <option value="universe">Univers</option>
-            <option value="architecture">Architecture</option>
-            <option value="dreams">Rêves</option>
-            <option value="relationships">Relations</option>
-            <option value="memory">Mémoire</option>
-            <option value="sports">Sports</option>
-            <option value="innovation">Innovation</option>
+            <option id="random" value="random">🎲 Aléatoire (Difficile)</option>
+            <option id="nature" value="nature">🌿 Nature</option>
+            <option id="technology" value="technology">💻 Technologie</option>
+            <option id="history" value="history">📜 Histoire</option>
+            <option id="emotions" value="emotions">💖 Émotions</option>
+            <option id="travel" value="travel">✈️ Voyage</option>
+            <option id="art" value="art">🎨 Art</option>
+            <option id="adventure" value="adventure">🧭 Aventure</option>
+            <option id="colors" value="colors">🌈 Couleurs</option>
+            <option id="music" value="music">🎵 Musique</option>
+            <option id="legends" value="legends">🐉 Légendes</option>
+            <option id="seasons" value="seasons">🍂 Saisons</option>
+            <option id="universe" value="universe">🌌 Univers</option>
+            <option id="architecture" value="architecture">🏛️ Architecture</option>
+            <option id="dreams" value="dreams">💭 Rêves</option>
+            <option id="relationships" value="relationships">🤝 Relations</option>
+            <option id="memory" value="memory">🧠 Mémoire</option>
+            <option id="sports" value="sports">🏅 Sports</option>
+            <option id="innovation" value="innovation">🚀 Innovation</option>
         </select>
 
         <input type="button" onclick="link()" value="Générer une page">
@@ -83,7 +87,6 @@
 
 
 
->>>>>>> fc59384585bae126f779cef9fb190b783092aa3c
 </body>
 
 </html>

@@ -61,7 +61,7 @@ async function getAssociatedWord() {
 
     // Récupère le thème choisi 
     const theme = document.getElementById('themeSelect').value;
-    const url = `https://api.datamuse.com/words?rel_trg=${theme}&topics=${theme}`;
+    const url = `https://api.datamuse.com/words?rel_trg=${theme}&topics=${theme}&max=1000`;
 
     try {
         // Requête API Datamuse
@@ -86,13 +86,12 @@ async function getAssociatedWord() {
 
             // Sélectionne un mot aléatoire parmi les résultats
             const randomWord = data[Math.floor(Math.random() * data.length)].word;
-
-            console.log(randomWord);
             const translated = await translateWord(randomWord);
 
             if (!translated) continue; // Si la traduction échoue, on passe au suivant
 
             const pageId = await checkWikipediaPage(translated);
+
             if (pageId) {
                 found = true;
                 return { translated, pageId };
@@ -177,7 +176,7 @@ async function launch() {
     const id = parameters.get('gameid');
     const theme = parameters.get('theme');
 
-    document.getElementById("page-title").textContent = theme;
+    document.getElementById("page-title").textContent = document.getElementById(theme).textContent;
 
 
 
@@ -311,7 +310,37 @@ function revealWord(elementId, word) {
         // Révélation du mot
         span.textContent = word;
         span.classList.add('guessed');
+        span.classList.remove('hidden');
     }, 250); // Délai de 250 ms pour l'animation
+}
+
+
+
+
+
+function history(input,count){
+    historyContainer = document.getElementById("historyContainer");
+
+    if (historyContainer){
+        const span = document.createElement('span');
+        const inputCount = document.createElement('span');
+
+        span.setAttribute('class','input')
+        span.setAttribute('input',input.value);
+        span.setAttribute('count',count);  
+        span.textContent = `${input.value}\u00A0(${count})`;   
+        
+
+        if (count > 0){
+            span.style.color = 'green';
+        }
+        else{
+            span.style.color = 'red';
+        }
+        
+        historyContainer.insertBefore(span, historyContainer.firstChild);
+    }
+
 }
 
 
@@ -322,20 +351,46 @@ function revealWord(elementId, word) {
 function guess(input) {
 
     // Normalisation de l'entree
-    const normalizedInput = normalizeString(input);
-
+    const normalizedInput = normalizeString(input.value);
+    
     // Fonction générique pour traiter les tables
-    function processTable(table, prefix) {
+    function processTable(table, prefix, count) {
+        
         table.forEach((element, index) => {
             if (normalizeString(element) === normalizedInput) {
+
                 revealWord(`${prefix}-${index}`, element);
+                table[index] = "_";
+                count += 1;
+                
             }
+
+            // Si le titre est trouvé
+            if (table === title_table && table.every(element => element === '_')) {
+
+                submitButton = document.getElementById('form-submit');
+                
+                const tries = parseInt(document.getElementById('triesCounter').textContent) + 1;
+
+                input.setAttribute('value',`⭐ Gagné ! Mot trouvé en ${tries} essais`);
+                input.disabled = true;
+                submitButton.disabled = true;
+                input.style.backgroundColor = 'lightgreen';
+
+            };
+
         });
+        
+        return count;
     }
 
+    let count = 0;
+
     // Traitement des tables du titre et du contenu
-    processTable(title_table, 'title');
-    processTable(content_table, 'content');
+    count = processTable(title_table, 'title', count);
+    count = processTable(content_table, 'content', count);
+
+    history(input,count);
 }
 
 
@@ -350,7 +405,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // Gestion de la soumission du formulaire
     form.addEventListener('submit', function (event) {
         event.preventDefault(); // Empêcher le rechargement de la page
-        guess(input.value); // Traitement de l'entrée 
+        if (!document.querySelector(`span[input=${input.value}]`)) {
+            guess(input); // Traitement de l'entrée
+            essais =  document.getElementById('triesCounter');
+            essais.textContent = parseInt(essais.textContent) + 1;
+        }
         form.reset(); // Réinitialise l'input
     });
 });
+
+
+
+
+
+function displayDescription() {
+    const descriptionText = document.getElementById("descriptionText");
+    const button = document.getElementById("displayButton");
+    const label = document.getElementById("displayLabel");
+
+    descriptionText.classList.toggle("hidden");
+
+    if (descriptionText.classList.contains("hidden")) {
+        button.style.transform = "rotate(0deg)";
+    } else {
+        button.style.transform = "rotate(90deg)";
+    }
+
+    label.style.opacity = "0";
+
+    setTimeout(() => {
+        label.textContent = descriptionText.classList.contains("hidden") ? "Révéler les règles" : "Cacher les règles";
+        label.style.opacity = "1";
+    }, 300);
+
+}
