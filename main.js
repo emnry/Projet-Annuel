@@ -397,6 +397,34 @@ function guess(input) {
 
 
 
+async function checkSimilarity(word1,word2) {
+
+    if (!word1 || !word2) {
+        return null; // Entrée invalide
+    }
+
+    try {
+        const response = await fetch(`http://127.0.0.1:5000/similarity?word1=${word1}&word2=${word2}`);
+        if (!response.ok) {
+            return null; // Erreur du Backend
+        }
+
+        const data = await response.json();
+        if (data.similarity !== undefined) {
+            return data.similarity;
+        } else {
+            return null; // Réponse invalide
+        }
+    } catch (error) {
+        console.error('Erreur de communication avec l\'API :', error);
+        return null; // Pas de Backend ou autre erreur
+    }
+}
+
+
+
+
+
 // Après chargement de la page
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('game-form');
