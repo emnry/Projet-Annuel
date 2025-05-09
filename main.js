@@ -439,3 +439,18 @@ function displayDescription() {
     }, 300);
 
 }
+
+function checkSimilarity(word1, word2) {
+    return word1[0] === word2[0] && word1[word1.length - 1] === word2[word2.length - 1];
+}
+
+function revealWord(originalWord, replacementWord) {
+    return checkSimilarity(originalWord, replacementWord) ? replacementWord : originalWord;
+}
+
+// Exemple
+let originalWord = "chat";
+let testWord = "chut";
+let modifiedWord = revealWord(originalWord, testWord);
+
+console.log(modifiedWord);
