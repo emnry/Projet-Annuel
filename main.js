@@ -82,7 +82,7 @@ async function getAssociatedWord() {
         // Tenter plusieurs mots jusqu'à trouver une page wiki valide
         let found = false;
 
-        while (found == false){
+        while (found == false) {
 
             // Sélectionne un mot aléatoire parmi les résultats
             const randomWord = data[Math.floor(Math.random() * data.length)].word;
@@ -273,6 +273,26 @@ async function launch() {
 
             }
 
+            const tooltip = document.getElementById('tooltip');
+            const targets = document.querySelectorAll('span[id^="content-"], span[id^="title-"]');
+            console.log(targets.length);
+            targets.forEach(elem => {
+                elem.addEventListener('mouseenter', (e) => {
+                    tooltip.style.display = 'block';
+
+                    tooltip.textContent = `Longueur : ${elem.textContent.trim().length}`;
+                });
+
+                elem.addEventListener('mousemove', (e) => {
+                    tooltip.style.left = e.pageX + 10 + 'px';
+                    tooltip.style.top = e.pageY - 20 + 'px';
+                });
+
+                elem.addEventListener('mouseleave', () => {
+                    tooltip.style.display = 'none';
+                });
+            });
+
         } else {
             console.log("Article non trouvé");
             return null;
@@ -281,6 +301,8 @@ async function launch() {
         console.error("Erreur lors de la récupération de l'article", error);
         return null;
     }
+
+
 }
 
 
@@ -318,26 +340,26 @@ function revealWord(elementId, word) {
 
 
 
-function history(input,count){
+function history(input, count) {
     historyContainer = document.getElementById("historyContainer");
 
-    if (historyContainer){
+    if (historyContainer) {
         const span = document.createElement('span');
         const inputCount = document.createElement('span');
 
-        span.setAttribute('class','input')
-        span.setAttribute('input',input.value);
-        span.setAttribute('count',count);  
-        span.textContent = `${input.value}\u00A0(${count})`;   
-        
+        span.setAttribute('class', 'input')
+        span.setAttribute('input', input.value);
+        span.setAttribute('count', count);
+        span.textContent = `${input.value}\u00A0(${count})`;
 
-        if (count > 0){
+
+        if (count > 0) {
             span.style.color = 'green';
         }
-        else{
+        else {
             span.style.color = 'red';
         }
-        
+
         historyContainer.insertBefore(span, historyContainer.firstChild);
     }
 
@@ -348,31 +370,161 @@ function history(input,count){
 
 
 // Traite une entrée de l'utilisateur
-function guess(input) {
+async function guess(input, form) {
+
+    try {
+        //const response = await fetch(`http://127.0.0.1:5000/health`);
+        const response = await fetch(`http://92.139.236.92:5000/health`);
+
+        if (!response.ok) {
+            return guessnoback(); // Erreur du Backend
+        }
+
+        else {
+
+            // Fonction générique pour traiter les tables
+            async function processTable(table, prefix, count) {
+
+                var inputValue = normalizeString(input.value);
+                for (let index = 0; index < table.length; index++) {
+                    const element = table[index];
+
+                    if (element !== "_") {
+
+                        similarity = await checkSimilarity(inputValue, normalizeString(element));
+
+                        console.log(inputValue, '&', normalizeString(element), '=', similarity);
+
+                        if (similarity >= 0.4 && similarity < 0.45) {
+
+                            const span = document.getElementById(`${prefix}-${index}`);
+
+                            if (!span.classList.contains('near2') && !span.classList.contains('near3')) {
+                                // Animation d'apparition
+                                span.classList.add('hidden');
+
+                                setTimeout(() => {
+                                    // Révélation du mot
+                                    span.textContent = input.value;
+                                    span.classList.add('near1');
+                                    span.classList.remove('hidden');
+                                }, 250); // Délai de 250 ms pour l'animation
+
+                            }
+
+
+                        }
+
+                        else if (similarity >= 0.30 && similarity < 0.40) {
+
+                            const span = document.getElementById(`${prefix}-${index}`);
+
+                            if (!span.classList.contains('near3')) {
+                                // Animation d'apparition
+                                span.classList.add('hidden');
+
+                                setTimeout(() => {
+                                    // Révélation du mot
+                                    span.textContent = input.value;
+                                    span.classList.add('near2');
+                                    span.classList.remove('hidden');
+                                }, 250); // Délai de 250 ms pour l'animation
+                            }
+
+
+
+                        }
+
+                        else if (similarity >= 0.4 && similarity < 0.95) {
+                            const span = document.getElementById(`${prefix}-${index}`);
+
+                            // Animation d'apparition
+                            span.classList.add('hidden');
+
+                            setTimeout(() => {
+                                // Révélation du mot
+                                span.textContent = input.value;
+                                span.classList.add('near3');
+                                span.classList.remove('hidden');
+                            }, 250); // Délai de 250 ms pour l'animation
+
+                        }
+
+                        else if (similarity >= 0.95) {
+                            const span = document.getElementById(`${prefix}-${index}`);
+                            revealWord(`${prefix}-${index}`, element);
+                            table[index] = "_";
+                            count += 1;
+
+                            span.textContent = input.value;
+                            span.classList.add('exact-match');
+                        }
+
+                        // Si le titre est trouvé
+                        if (table === title_table && table.every(element => element === '_')) {
+
+                            submitButton = document.getElementById('form-submit');
+
+                            const tries = parseInt(document.getElementById('triesCounter').textContent) + 1;
+
+                            input.setAttribute('value', `⭐ Gagné ! Mot trouvé en ${tries} essais`);
+                            input.disabled = true;
+                            submitButton.disabled = true;
+                            input.style.backgroundColor = 'lightgreen';
+
+                        };
+                    }
+
+                };
+
+                return count;
+            }
+
+            let count = 0;
+
+            // Traitement des tables du titre et du contenu
+            count = await processTable(title_table, 'title', count);
+            count = await processTable(content_table, 'content', count);
+
+            history(input, count);
+
+            form.reset();
+
+        }
+
+    } catch (error) {
+        console.error('Erreur de communication avec l\'API :', error);
+        return null; // Pas de Backend ou autre erreur
+    }
+
+}
+
+// Traite une entrée de l'utilisateur si pas de back connecté
+function guessnoback(input) {
 
     // Normalisation de l'entree
     const normalizedInput = normalizeString(input.value);
-    
+
     // Fonction générique pour traiter les tables
     function processTable(table, prefix, count) {
-        
+
         table.forEach((element, index) => {
             if (normalizeString(element) === normalizedInput) {
 
                 revealWord(`${prefix}-${index}`, element);
                 table[index] = "_";
                 count += 1;
-                
+
             }
 
             // Si le titre est trouvé
             if (table === title_table && table.every(element => element === '_')) {
 
                 submitButton = document.getElementById('form-submit');
-                
+
                 const tries = parseInt(document.getElementById('triesCounter').textContent) + 1;
 
-                input.setAttribute('value',`⭐ Gagné ! Mot trouvé en ${tries} essais`);
+                input.setAttribute('value', `⭐ Gagné ! Mot trouvé en ${tries} essais`);
                 input.disabled = true;
                 submitButton.disabled = true;
                 input.style.backgroundColor = 'lightgreen';
@@ -380,7 +532,7 @@ function guess(input) {
             };
 
         });
-        
+
         return count;
     }
 
@@ -390,37 +542,42 @@ function guess(input) {
     count = processTable(title_table, 'title', count);
     count = processTable(content_table, 'content', count);
 
-    history(input,count);
+    history(input, count);
 }
 
 
 
 
 
-async function checkSimilarity(word1,word2) {
+async function checkSimilarity(word1, word2) {
 
     if (!word1 || !word2) {
-        return null; // Entrée invalide
+
+        return 0; // Entrée invalide
     }
 
     try {
-        const response = await fetch(`http://127.0.0.1:5000/similarity?word1=${word1}&word2=${word2}`);
+        //const response = await fetch(`http://127.0.0.1:5000/similarity?word1=${word1}&word2=${word2}`);
+        const response = await fetch(`http://92.139.236.92:5000/similarity?word1=${word1}&word2=${word2}`);
         if (!response.ok) {
-            return null; // Erreur du Backend
+
+            return 0; // Erreur du Backend
         }
 
         const data = await response.json();
         if (data.similarity !== undefined) {
             return data.similarity;
         } else {
-            return null; // Réponse invalide
+
+            return 0; // Réponse invalide
         }
+
     } catch (error) {
         console.error('Erreur de communication avec l\'API :', error);
-        return null; // Pas de Backend ou autre erreur
+
+        return 0; // Pas de Backend ou autre erreur
     }
 }
-
 
 
 
@@ -434,13 +591,20 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', function (event) {
         event.preventDefault(); // Empêcher le rechargement de la page
         if (!document.querySelector(`span[input=${input.value}]`)) {
-            guess(input); // Traitement de l'entrée
-            essais =  document.getElementById('triesCounter');
+
+            guess(input, form); // Traitement de l'entrée
+            essais = document.getElementById('triesCounter');
             essais.textContent = parseInt(essais.textContent) + 1;
         }
-        form.reset(); // Réinitialise l'input
+        else {
+            form.reset();
+        }
+        // Réinitialise l'input
     });
+
 });
+
+
 
 
 
