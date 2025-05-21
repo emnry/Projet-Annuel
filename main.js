@@ -248,8 +248,8 @@ async function launch() {
             const title = document.getElementById('article-title-container');
             const content = document.getElementById('article-container');
 
-            title.textContent ='';
-            content.textContent ='';
+            title.textContent = '';
+            content.textContent = '';
 
 
             if (title && content) {
@@ -311,7 +311,20 @@ async function launch() {
                 elem.addEventListener('mouseenter', (e) => {
                     tooltip.style.display = 'block';
 
-                    tooltip.textContent = `Longueur : ${elem.textContent.trim().length}`;
+                    const [prefix, indexStr] = elem.id.split('-');
+                    const index = parseInt(indexStr, 10);
+
+                    let wordLength;
+                    if (prefix === 'content' && index < content_table.length) {
+                        wordLength = content_table[index].length;
+                    } else if (prefix === 'title' && index < title_table.length) {
+                        wordLength = title_table[index].length;
+                    } else {
+                        wordLength = 0;
+                    }
+
+                    tooltip.textContent = `Longueur : ${wordLength}`;
+
                 });
 
                 elem.addEventListener('mousemove', (e) => {
@@ -434,20 +447,38 @@ async function guess(input, form) {
                             span.setAttribute('similarity', similarity); // Stockage de la similarité dans le mot
                         }
 
-                        if (similarity === 1) {
+                        if (similarity >= 0.95) {
                             //console.log('found');
                             span.classList.remove('near');
                             span.classList.add('hidden');
 
                             setTimeout(() => {
-                                // Révélation du mot
-                                span.textContent = input.value;
+
+                                const [prefix, indexStr] = span.id.split('-');
+                                const index = parseInt(indexStr, 10);
+
+                                let revealedWord = '';
+
+                                if (prefix === 'content' && index < content_table.length) {
+                                    revealedWord = content_table[index];
+                                    content_table[index] = '_';
+                                } else if (prefix === 'title' && index < title_table.length) {
+                                    revealedWord = title_table[index];
+                                    title_table[index] = '_';
+                                }
+
+                                // Révélation du mot depuis le tableau et non depuis l'input utilisateur
+                                span.textContent = revealedWord;
+
+
+
+
                                 span.classList.add('guessed');
                                 span.setAttribute('id', 'guessed')
                                 span.classList.remove('hidden');
                             }, 250); // Délai de 250 ms pour l'animation
 
-                            count+=1;
+                            count += 1;
 
                         }
 
