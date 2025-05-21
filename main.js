@@ -5,8 +5,7 @@ async function checkBackend() {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 2000); // 2s max
 
-        //const response = await fetch(`http://127.0.0.1:5000/health`, {
-        const response = await fetch(`http://92.139.236.92:5000/health`, {
+        const response = await fetch(`http://127.0.0.1:5000/health`, {
             signal: controller.signal,
         });
 
@@ -561,8 +560,7 @@ async function checkSimilarity(word1, word2) {
     }
 
     try {
-        //const response = await fetch(`http://127.0.0.1:5000/similarity?word1=${word1}&word2=${word2}`);
-        const response = await fetch(`http://92.139.236.92:5000/similarity?word1=${word1}&word2=${word2}`);
+        const response = await fetch(`http://127.0.0.1:5000/similarity?word1=${word1}&word2=${word2}`);
         if (!response.ok) {
 
             return 0; // Erreur du Backend
