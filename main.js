@@ -494,24 +494,25 @@ async function guess(input, form) {
                             }, 250); // Délai de 250 ms pour l'animation
 
                         }
+                        if (title_table.every(element => element === '_')) {
+
+
+                            submitButton = document.getElementById('form-submit');
+
+                            const tries = parseInt(document.getElementById('triesCounter').textContent);
+
+                            input.setAttribute('value', `⭐ Gagné ! Mot trouvé en ${tries} essais`);
+                            input.disabled = true;
+                            submitButton.disabled = true;
+                            input.style.backgroundColor = 'lightgreen';
+
+                        };
 
                     }
 
 
 
-                    // Si le titre est trouvé
-                    if (table === title_table && table.every(element => element === '_')) {
 
-                        submitButton = document.getElementById('form-submit');
-
-                        const tries = parseInt(document.getElementById('triesCounter').textContent) + 1;
-
-                        input.setAttribute('value', `⭐ Gagné ! Mot trouvé en ${tries} essais`);
-                        input.disabled = true;
-                        submitButton.disabled = true;
-                        input.style.backgroundColor = 'lightgreen';
-
-                    };
                 }
 
             };
@@ -528,6 +529,11 @@ async function guess(input, form) {
         history(input, count);
 
         form.reset();
+        input.disabled = false;
+
+
+
+
 
     }
 
@@ -632,7 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 guess(input, form); // Traitement de l'entrée
                 essais = document.getElementById('triesCounter');
                 essais.textContent = parseInt(essais.textContent) + 1;
-                input.disabled = false;
+
             }
             else {
                 form.reset();
