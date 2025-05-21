@@ -5,6 +5,8 @@ Inspiré de *Pédantix*.
 
 [Lien GitHub Pages](https://emnry.github.io/Projet-Annuel)
 
+[Installation du Backend Python Flask](https://github.com/emnry/check-similarity-API)
+
 ## ✨ Fonctionnalités
 
 - 🧩 Découverte d’un article Wikipédia mot par mot.
