@@ -153,7 +153,8 @@ header {
     width: 90%;
 }
 
-.article .article-title span, .article .article-content span{
+.article .article-title span,
+.article .article-content span {
     cursor: help;
 }
 
@@ -189,18 +190,8 @@ form,
     opacity: 1;
 }
 
-.near1 {
+.near {
     color: #d3d3d3;
-}
-
-/* 0.3-0.399 */
-.near2 {
-    color: #a9a9a9;
-}
-
-/* 0.4-0.44 */
-.near3 {
-    color: #808080;
 }
 
 /* 0.45-0.99 */
@@ -219,5 +210,31 @@ form,
     font-size: x-small;
     display: none;
     z-index: 1000;
-    
+
+}
+
+.highlight {
+    background: linear-gradient(90deg, #ff6ec4, #ffc6ec, #7873f5);
+    /* Ajoute une couleur intermédiaire */
+    background-size: 300% auto;
+    /* Plus large = fondu plus progressif */
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: gradientMove 5s ease-in-out infinite;
+    /* Plus lent + fondu doux */
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0% center;
+    }
+
+    50% {
+        background-position: 100% center;
+    }
+
+    100% {
+        background-position: 0% center;
+    }
 }

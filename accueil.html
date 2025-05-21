@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml"
+        href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="80">🫵</text></svg>'>
+
+    <title>Accueil : Quelle est cette page ?</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            font-family: "Source Code Pro", monospace;
+        }
+
+        h1 {
+            font-size: 5em;
+        }
+
+
+        .button {
+            padding: 3vh 2vw;
+            font-size: 1.5rem;
+            background-color: #ced5dc;
+            color: black;
+            border-radius: 0.75em;
+            animation: clignote 3s infinite;
+            text-decoration: none;
+            border: none;
+
+
+
+        }
+
+
+        @keyframes clignote {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(90deg, #ff6ec4, #ffc6ec, #7873f5);
+            /* Ajoute une couleur intermédiaire */
+            background-size: 300% auto;
+            /* Plus large = fondu plus progressif */
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: gradientMove 5s ease-in-out infinite;
+            /* Plus lent + fondu doux */
+        }
+
+        @keyframes gradientMove {
+            0% {
+                background-position: 0% center;
+            }
+
+            50% {
+                background-position: 100% center;
+            }
+
+            100% {
+                background-position: 0% center;
+            }
+        }
+    </style>
+</head>
+
+
+<h1>Quelle est cette <span class="highlight">page</span> ?</h1>
+
+<h4>Projet Annuel 🫵😐</h4>
+
+<body>
+    <a href="index.html" class="button">Cliquez ici pour jouer</a>
+</body>
+
+</html>
