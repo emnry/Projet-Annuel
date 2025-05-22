@@ -420,6 +420,9 @@ async function guess(input, form) {
 
     if (Back === false) {
         guessnoback(input); // Erreur du Backend
+        form.reset();
+        input.disabled = false;
+
     }
 
     else if (Back === true) {
@@ -583,6 +586,9 @@ function guessnoback(input) {
     count = processTable(content_table, 'content', count);
 
     history(input, count);
+
+
+
 }
 
 
